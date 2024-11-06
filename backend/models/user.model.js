@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     lastName: { type: String, required: true },
+    followers: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     DOB: { type: String, required: true },
     avatar: {
       type: String,
