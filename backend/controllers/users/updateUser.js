@@ -24,7 +24,7 @@ const updateUser = async (req, res) => {
     console.error(`Error: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Server Error",
     });
   }
 };
