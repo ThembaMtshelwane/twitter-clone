@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { UserModel } from "../../models/user.model.js";
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   const { id } = req.params;
   const user = req.body;
 
@@ -28,3 +28,5 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
+export default updateUser;

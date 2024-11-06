@@ -1,7 +1,6 @@
 import { UserModel } from "../../models/user.model.js";
 
-
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
   const user = req.body;
 
   if (!user.username) {
@@ -26,3 +25,5 @@ export const createUser = async (req, res) => {
     });
   }
 };
+
+export default createUser;

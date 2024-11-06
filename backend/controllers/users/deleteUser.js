@@ -1,6 +1,6 @@
 import { UserModel } from "../../models/user.model.js";
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     await UserModel.findByIdAndDelete(id);
@@ -16,3 +16,5 @@ export const deleteUser = async (req, res) => {
     });
   }
 };
+
+export default deleteUser;
