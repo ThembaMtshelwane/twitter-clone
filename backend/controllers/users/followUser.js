@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserModel } from "../models/user.model.js";
+import { UserModel } from "../../models/user.model.js";
 
 const followUser = async (req, res) => {
   const { id } = req.params; // get user id
