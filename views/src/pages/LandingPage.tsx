@@ -3,6 +3,7 @@ import JoinOptions from "../components/Auth/JoinOptions";
 import { useState } from "react";
 import AuthModal from "../components/Auth/AuthModal";
 import CreateAccountForm from "../components/Auth/CreateAccountForm";
+import SignInForm from "../components/Auth/SignInForm";
 
 const LandingPage = () => {
   const [openSignIn, setOpenSignIn] = useState<boolean>(false);
@@ -36,7 +37,7 @@ const LandingPage = () => {
         </div>
       </section>
       <AuthModal isOpen={openSignIn} setIsOpen={setOpenSignIn}>
-        <h1>Sign In</h1>
+        <SignInForm />
       </AuthModal>
       <AuthModal isOpen={openCreateAccount} setIsOpen={setOpenCreateAccount}>
         <CreateAccountForm />
