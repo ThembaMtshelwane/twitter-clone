@@ -1,3 +1,4 @@
+import { CgProfile } from "react-icons/cg";
 import { FaXTwitter } from "react-icons/fa6";
 import { GiFeather } from "react-icons/gi";
 import { IoClose, IoSearch } from "react-icons/io5";
@@ -37,19 +38,21 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
           </section>
         </section>
       )}
-      <section>
-        <div className="hidden border md:flex flex-col w-fit h-[150px]  justify-between p-4 rounded-3xl">
-          <div className="text-xl">
-            <FaXTwitter />
-          </div>
-          <div className="text-xl">
-            <IoSearch />
-          </div>
-          <div className="text-xl">
-            <GiFeather />
-          </div>
+
+      <div className="hidden border md:flex flex-col w-fit h-[240px] fixed left-5 z-40 top-1/4 mx-2 justify-between py-6 p-4 rounded-3xl">
+        <div className="text-xl">
+          <FaXTwitter />
         </div>
-      </section>
+        <div className="text-xl">
+          <IoSearch />
+        </div>
+        <div className="text-2xl">
+          <CgProfile />
+        </div>
+        <div className="text-xl">
+          <GiFeather />
+        </div>
+      </div>
     </>
   );
 };
