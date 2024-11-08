@@ -1,5 +1,34 @@
-const AuthModal = () => {
-  return <div>AuthModal</div>;
+import { ReactNode } from "react";
+import { FaXTwitter } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+
+type AuthModalProps = {
+  children: ReactNode;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+};
+
+const AuthModal = ({ isOpen, setIsOpen, children }: AuthModalProps) => {
+  return (
+    <>
+      {isOpen && (
+        <section className="absolute inset-0 bg-black bg-opacity-30 top-0 left-0 flex">
+          <div className="bg-primary w-full max-w-[550px] mx-auto my-auto  min-h-[70vh] rounded-3xl p-8 ">
+            <div
+              className="text-2xl absolute cursor-pointer"
+              onClick={() => setIsOpen(false)}
+            >
+              <IoClose />
+            </div>
+            <div className="text-5xl mb-10  lg:flex justify-self-center">
+              <FaXTwitter />
+            </div>
+            {children}
+          </div>
+        </section>
+      )}
+    </>
+  );
 };
 
 export default AuthModal;
