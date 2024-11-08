@@ -2,7 +2,7 @@ import { FcGoogle } from "react-icons/fc";
 
 const JoinOptions = () => {
   return (
-    <div className="my-10  row-span-2 max-w-[320px] mx-auto">
+    <div className="my-10  row-span-2 max-w-[320px] mx-auto lg:mx-0">
       <h3 className="font-semibold text-3xl my-5 mx-auto sm:text-4xl">
         Join today.
       </h3>
