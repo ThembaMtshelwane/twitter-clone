@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
 import GoogleAuthButton from "./AuthButtons/GoogleAuthButton";
 
 type JoinOptionsProps = {
