@@ -35,21 +35,21 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
               </div>
             </section>
           </section>
-          <section>
-            <div className="hidden border md:flex flex-col w-fit h-[150px] absolute top-1/3 justify-between p-4 rounded-3xl">
-              <div className="text-xl">
-                <FaXTwitter />
-              </div>
-              <div className="text-xl">
-                <IoSearch />
-              </div>
-              <div className="text-xl">
-                <GiFeather />
-              </div>
-            </div>
-          </section>
         </section>
       )}
+      <section>
+        <div className="hidden border md:flex flex-col w-fit h-[150px]  justify-between p-4 rounded-3xl">
+          <div className="text-xl">
+            <FaXTwitter />
+          </div>
+          <div className="text-xl">
+            <IoSearch />
+          </div>
+          <div className="text-xl">
+            <GiFeather />
+          </div>
+        </div>
+      </section>
     </>
   );
 };

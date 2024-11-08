@@ -9,7 +9,7 @@ type Props = {
 
 const Navbar = ({ isOpen, setIsOpen }: Props) => {
   return (
-    <nav className="border-2 px-6 py-4 flex justify-between">
+    <nav className="border-2 px-6 py-4 flex justify-between md:hidden">
       <Link to="/index">
         <div className="text-2xl border-red-500 border p-4 w-fit ">
           <FaXTwitter />
