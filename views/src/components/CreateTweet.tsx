@@ -5,7 +5,7 @@ const MAX_IMAGES = 3;
 const MAX_CAPTION_LENGTH = 105;
 
 const CreateTweet = () => {
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<string[]>([]);
   const [caption, setCaption] = useState("");
 
   const handleImageChange = useCallback(
@@ -14,9 +14,23 @@ const CreateTweet = () => {
       const validImages = files.filter((file) =>
         file.type.startsWith("image/")
       );
-      setImages((prevImages) => {
-        const newImages = [...prevImages, ...validImages];
-        return newImages.slice(0, MAX_IMAGES);
+
+      const imagePromises = validImages.map(
+        (file) =>
+          new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              resolve(reader.result as string); // Base64 string
+            };
+            reader.readAsDataURL(file); // Convert image to Base64
+          })
+      );
+
+      Promise.all(imagePromises).then((base64Images) => {
+        setImages((prevImages) => {
+          const newImages = [...prevImages, ...base64Images];
+          return newImages.slice(0, MAX_IMAGES); // Limit to MAX_IMAGES
+        });
       });
     },
     []
@@ -43,9 +57,8 @@ const CreateTweet = () => {
 
   const imagePreviews = useMemo(
     () =>
-      images.map((imgFile) => ({
-        file: imgFile,
-        preview: URL.createObjectURL(imgFile),
+      images.map((imgBase64) => ({
+        preview: imgBase64,
       })),
     [images]
   );
@@ -74,7 +87,6 @@ const CreateTweet = () => {
     </section>
   );
 };
-
 
 const FileInput = ({
   onChange,
@@ -117,7 +129,7 @@ const ImagePreviews = ({
   images,
   onRemove,
 }: {
-  images: { file: File; preview: string }[];
+  images: { preview: string }[];
   onRemove: (index: number) => void;
 }) => {
   return (
