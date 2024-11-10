@@ -9,15 +9,15 @@ type Props = {
 
 const Navbar = ({ isOpen, setIsOpen }: Props) => {
   return (
-    <nav className="border-2 px-6 py-4 flex justify-between md:hidden">
+    <nav className="border-b px-6 py-4 flex justify-between md:hidden">
       <Link to="/index">
-        <div className="text-2xl border-red-500 border p-4 w-fit ">
+        <div className="text-2xl  p-4 w-fit ">
           <FaXTwitter />
         </div>
       </Link>
 
       <div
-        className="text-2xl border-red-500 border p-4 w-fit md:hidden"
+        className="text-2xl  p-4 w-fit md:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <TiThMenu />

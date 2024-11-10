@@ -1,3 +1,5 @@
+import { FaRegComment, FaRegHeart } from "react-icons/fa6";
+
 type TweetProps = {
   images: string[];
 };
@@ -20,23 +22,7 @@ const Tweet = ({ images }: TweetProps) => {
         sit corporis voluptatibus voluptas saepe dolorem, cum maxime, hic
         aspernatur natus, vero eius sapiente.
       </p>
-      {/* <div className="grid grid-cols-6 grid-rows-4 gap-4">
-        <img
-          className="rounded-xl object-cover object-center my-2 w-full h-full  max-w-[450px] mx-auto col-span-4 row-span-4"
-          src="https://wallpapers.com/images/featured/best-cool-pictures-40lkhq7b7tl3p1qw.jpg"
-          alt=""
-        />
-        <img
-          className="rounded-xl object-cover object-center my-2 w-full h-full  max-w-[450px] mx-auto col-span-2 row-span-2"
-          src="https://wallpapers.com/images/featured/best-cool-pictures-40lkhq7b7tl3p1qw.jpg"
-          alt=""
-        />
-        <img
-          className="rounded-xl object-cover object-center my-2 w-full h-full  max-w-[450px] mx-auto col-span-2 row-span-2"
-          src="https://wallpapers.com/images/featured/best-cool-pictures-40lkhq7b7tl3p1qw.jpg"
-          alt=""
-        />
-      </div> */}
+
       <div className="my-4">
         {images.length === 1 && (
           <img
@@ -78,7 +64,16 @@ const Tweet = ({ images }: TweetProps) => {
           </div>
         )}
       </div>
-      <div className="flex"></div>
+      <div className="flex  w-[200px] px-4 justify-between py-2">
+        <div className="flex items-center gap-2">
+          <FaRegComment />
+          <p>25</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <FaRegHeart />
+          <p>1025</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Tweet from "../components/Tweet";
 
 const MainPage = () => {
@@ -15,11 +15,11 @@ const MainPage = () => {
     <section className="min-h-screen">
       <Navbar isOpen={openSidebar} setIsOpen={setOpenSidebar} />
       <Sidebar setIsOpen={setOpenSidebar} isOpen={openSidebar} />
-      <div className="border">
-        <div className="">
+      <div className="">
+        {/* <div className="">
           <Link to="for-you">For you</Link>
           <Link to="following">Following</Link>
-        </div>
+        </div> */}
         {/* <div className="w-[90%] sm:w-[80%] md:w-[70%] grid lg:grid-cols-2 gap-5 relative  min-h-[80vh] mx-auto md:ml-auto">
           <Tweet images={images} />
           <Tweet
@@ -52,7 +52,7 @@ const MainPage = () => {
             ]}
           />
         </div> */}
-        <div className="w-[90%] sm:w-[80%] md:w-[70%] grid lg:grid-cols-2 gap-5 relative  min-h-[80vh] mx-auto md:ml-auto">
+        <div className="mt-5 w-[90%] sm:w-[80%] md:w-[70%] grid lg:grid-cols-2 gap-5 relative  min-h-[80vh] mx-auto md:ml-auto">
           <div className="space-y-5">
             <Tweet images={images} />
             <Tweet

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaXTwitter } from "react-icons/fa6";
 import { GiFeather } from "react-icons/gi";
 import { IoClose, IoSearch } from "react-icons/io5";
+import AuthModal from "./Auth/AuthModal";
+import CreateTweet from "./CreateTweet";
 
 type Props = {
   isOpen: boolean;
@@ -9,28 +12,32 @@ type Props = {
 };
 
 const Sidebar = ({ isOpen, setIsOpen }: Props) => {
+  const [openCreateTweet, setOpenCreateTweet] = useState(false);
   return (
     <>
       {isOpen && (
-        <section className="bg-black inset-0 h-screen bg-opacity-30 md:hidden">
+        <section className="fixed  z-10 bg-opacity-50  md:hidden bg-black h-screen inset-0">
           <section className="w-[180px] bg-secondary fixed top-0 h-screen flex flex-col">
             <section className="h-[50vh] my-auto space-y-4">
               <div
-                className="text-2xl cursor-pointer border-2 p-4 flex justify-around items-center"
+                className="text-2xl cursor-pointer hover:scale-105 p-4 flex justify-around items-center"
                 onClick={() => setIsOpen(false)}
               >
                 <IoClose />
                 <h2>Close</h2>
               </div>
-              <div className="text-2xl cursor-pointer border-2 p-4  flex justify-around items-center">
+              <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center ">
                 <FaXTwitter />
                 <h2>Home</h2>
               </div>
-              <div className="text-2xl cursor-pointer border-2 p-4  flex justify-around items-center">
+              <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center">
                 <IoSearch />
                 <h2>Search</h2>
               </div>
-              <div className="text-2xl cursor-pointer border-2 p-4  flex justify-around items-center">
+              <div
+                className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center"
+                onClick={() => setOpenCreateTweet(!openCreateTweet)}
+              >
                 <GiFeather />
                 <h2>Tweet</h2>
               </div>
@@ -43,16 +50,22 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
         <div className="text-xl">
           <FaXTwitter />
         </div>
-        <div className="text-xl">
+        <div className="text-xl cursor-pointer">
           <IoSearch />
         </div>
-        <div className="text-2xl">
+        <div className="text-2xl cursor-pointer">
           <CgProfile />
         </div>
-        <div className="text-xl">
+        <div
+          className="text-xl cursor-pointer"
+          onClick={() => setOpenCreateTweet(!openCreateTweet)}
+        >
           <GiFeather />
         </div>
       </div>
+      <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
+        <CreateTweet />
+      </AuthModal>
     </>
   );
 };
