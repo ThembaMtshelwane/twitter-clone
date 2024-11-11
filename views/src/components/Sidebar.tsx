@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { CgProfile } from "react-icons/cg";
 import { FaXTwitter } from "react-icons/fa6";
 import { GiFeather } from "react-icons/gi";
-import { IoClose, IoSearch } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
 import { Link } from "react-router-dom";
