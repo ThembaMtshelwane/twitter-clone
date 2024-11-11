@@ -5,6 +5,7 @@ import { GiFeather } from "react-icons/gi";
 import { IoClose, IoSearch } from "react-icons/io5";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
+import { Link } from "react-router-dom";
 
 type Props = {
   isOpen: boolean;
@@ -26,17 +27,28 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
                 <IoClose />
                 <h2>Close</h2>
               </div>
-              <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center ">
+              <Link
+                to="/index"
+                className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center "
+                onClick={() => setIsOpen(false)}
+              >
                 <FaXTwitter />
                 <h2>Home</h2>
-              </div>
-              <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center">
+              </Link>
+              {/* <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center">
                 <IoSearch />
                 <h2>Search</h2>
-              </div>
+              </div> */}
+              {/* <div className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center">
+                <CgProfile />
+                <h2>Profile</h2>
+              </div> */}
               <div
                 className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center"
-                onClick={() => setOpenCreateTweet(!openCreateTweet)}
+                onClick={() => {
+                  setOpenCreateTweet(!openCreateTweet);
+                  setIsOpen(false);
+                }}
               >
                 <GiFeather />
                 <h2>Tweet</h2>
@@ -46,16 +58,16 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
         </section>
       )}
 
-      <div className="hidden border md:flex flex-col w-fit h-[240px] fixed left-5 z-40 top-1/4 mx-2 justify-between py-6 p-4 rounded-3xl">
-        <div className="text-xl">
+      <div className="hidden border md:flex flex-col w-fit h-[120px] fixed left-5 z-40 top-1/4 mx-2 justify-between py-6 p-4 rounded-3xl">
+        <Link to="/index" className="text-xl">
           <FaXTwitter />
-        </div>
-        <div className="text-xl cursor-pointer">
+        </Link>
+        {/* <Link to="" className="text-xl cursor-pointer">
           <IoSearch />
-        </div>
-        <div className="text-2xl cursor-pointer">
+        </Link>
+        <Link to="" className="text-2xl cursor-pointer">
           <CgProfile />
-        </div>
+        </Link> */}
         <div
           className="text-xl cursor-pointer"
           onClick={() => setOpenCreateTweet(!openCreateTweet)}
