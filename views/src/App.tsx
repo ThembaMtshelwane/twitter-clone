@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
+import SinglePost from "./pages/SinglePost";
+import MainLayout from "./layouts/MainLayout";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -8,9 +10,20 @@ export default function App() {
       path: "/",
       element: <LandingPage />,
     },
+
     {
       path: "/index",
-      element: <MainPage />,
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <MainPage />,
+        },
+        {
+          path: "tweet/:id",
+          element: <SinglePost />,
+        },
+      ],
     },
   ]);
 

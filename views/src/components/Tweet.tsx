@@ -1,12 +1,32 @@
 import { FaRegComment, FaRegHeart } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import AuthModal from "./Auth/AuthModal";
+import CreateTweet from "./CreateTweet";
+import { useState } from "react";
 
 type TweetProps = {
   images: string[];
+  id: number;
 };
-const Tweet = ({ images }: TweetProps) => {
+const Tweet = ({ images, id }: TweetProps) => {
+  const [openCreateTweet, setOpenCreateTweet] = useState(false);
+  const [likesCount, setLikesCount] = useState(352);
+  const [likesToggle, setLikesToggle] = useState(false);
+
+  const handleLikesCounting = () => {
+    if (likesToggle) {
+      setLikesCount(likesCount + 1);
+    } else {
+      setLikesCount(likesCount - 1);
+    }
+    setLikesToggle((prev) => !prev);
+  };
   return (
-    <div className="border-secondary border p-5 rounded-lg h-fit">
-      <div className="flex items-center  w-[250px]">
+    <Link
+      to={`/index/tweet/${id}`}
+      className=" p-5 rounded-lg border border-secondary "
+    >
+      <div className="flex items-center  w-[250px] ">
         <img
           className="w-[80px] h-[80px] object-cover object-center rounded-full"
           src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
@@ -33,7 +53,7 @@ const Tweet = ({ images }: TweetProps) => {
         )}
 
         {images.length === 2 && (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 h-full">
             {images.slice(0, 2).map((img, index) => (
               <img
                 key={index}
@@ -46,7 +66,7 @@ const Tweet = ({ images }: TweetProps) => {
         )}
 
         {images.length >= 3 && (
-          <div className="grid grid-cols-6 grid-rows-4 gap-4">
+          <div className="grid grid-cols-6 grid-rows-4 gap-4 h-full">
             <img
               key={0}
               className="rounded-xl object-cover object-center w-full h-full col-span-4 row-span-4"
@@ -65,16 +85,27 @@ const Tweet = ({ images }: TweetProps) => {
         )}
       </div>
       <div className="flex  w-[200px] px-4 justify-between py-2">
-        <div className="flex items-center gap-2">
+        <div
+          className="flex items-center gap-2 "
+          onClick={() => setOpenCreateTweet(!openCreateTweet)}
+        >
           <FaRegComment />
           <p>25</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div
+          className={`flex items-center gap-2 ${
+            likesToggle ? "bg-secondary" : "bg-none"
+          }`}
+          onClick={handleLikesCounting}
+        >
           <FaRegHeart />
-          <p>1025</p>
+          <p>{likesCount}</p>
         </div>
       </div>
-    </div>
+      <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
+        <CreateTweet />
+      </AuthModal>
+    </Link>
   );
 };
 
