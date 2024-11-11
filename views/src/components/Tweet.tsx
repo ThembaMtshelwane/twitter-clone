@@ -12,6 +12,7 @@ const Tweet = ({ images, id }: TweetProps) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);
+  const [followToggle, seFollowToggle] = useState(false);
 
   const handleLikesCounting = () => {
     if (likesToggle) {
@@ -22,90 +23,107 @@ const Tweet = ({ images, id }: TweetProps) => {
     setLikesToggle((prev) => !prev);
   };
   return (
-    <Link
-      to={`/index/tweet/${id}`}
-      className=" p-5 rounded-lg border border-secondary "
-    >
-      <div className="flex items-center  w-[250px] ">
-        <img
-          className="w-[80px] h-[80px] object-cover object-center rounded-full"
-          src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
-          alt=""
-        />
-        <div className="mx-4">
-          <h3>Full name</h3>
-          <h3>Username</h3>
-        </div>
-      </div>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit a in
-        sit corporis voluptatibus voluptas saepe dolorem, cum maxime, hic
-        aspernatur natus, vero eius sapiente.
-      </p>
-
-      <div className="my-4">
-        {images.length === 1 && (
+    <div className=" p-5 rounded-lg border border-secondary ">
+      <div className="grid grid-cols-5 grid-rows-2 items-center mb-5 h-[110px]">
+        <Link
+          to={`/index/profile`}
+          className="col-[1/2] row-[1/3]  h-full w-full flex items-center justify-center"
+        >
           <img
-            className="rounded-xl object-cover object-center w-full max-w-[450px] mx-auto"
-            src={images[0]}
+            className="object-cover object-center h-full w-[100px] rounded-full"
+            src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
             alt=""
           />
-        )}
+        </Link>
+        <div className=" flex flex-col col-span-4 mx-4">
+          <Link to={`/index/profile`}>
+            <h3 className="text-xl">Full name</h3>
+            <h3 className="text-sm text-gray-500">Username</h3>
+          </Link>
+        </div>
+        <button
+          className={`bg-secondary col-[2/3] mx-4  w-[120px] px-2 py-1 text-sm rounded  ${
+            followToggle
+              ? "hover:bg-red-400 hover:border-red-400 hover:border"
+              : ""
+          }`}
+          onClick={() => seFollowToggle((prev) => !prev)}
+        >
+          {followToggle ? "Following" : "Follow ?"}
+        </button>
+      </div>
 
-        {images.length === 2 && (
-          <div className="grid grid-cols-2 gap-4 h-full">
-            {images.slice(0, 2).map((img, index) => (
-              <img
-                key={index}
-                className="rounded-xl object-cover object-center w-full h-full"
-                src={img}
-                alt=""
-              />
-            ))}
-          </div>
-        )}
+      <Link to={`/index/tweet/${id}`}>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit a in
+          sit corporis voluptatibus voluptas saepe dolorem, cum maxime, hic
+          aspernatur natus, vero eius sapiente.
+        </p>
 
-        {images.length >= 3 && (
-          <div className="grid grid-cols-6 grid-rows-4 gap-4 h-full">
+        <div className="my-4">
+          {images.length === 1 && (
             <img
-              key={0}
-              className="rounded-xl object-cover object-center w-full h-full col-span-4 row-span-4"
+              className="rounded-xl object-cover object-center w-full max-w-[450px] mx-auto"
               src={images[0]}
               alt=""
             />
-            {images.slice(1, 3).map((img, index) => (
+          )}
+
+          {images.length === 2 && (
+            <div className="grid grid-cols-2 gap-4 h-full">
+              {images.slice(0, 2).map((img, index) => (
+                <img
+                  key={index}
+                  className="rounded-xl object-cover object-center w-full h-full"
+                  src={img}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
+
+          {images.length >= 3 && (
+            <div className="grid grid-cols-6 grid-rows-4 gap-4 h-full">
               <img
-                key={index}
-                className="rounded-xl object-cover object-center w-full h-full col-span-2 row-span-2"
-                src={img}
+                key={0}
+                className="rounded-xl object-cover object-center w-full h-full col-span-4 row-span-4"
+                src={images[0]}
                 alt=""
               />
-            ))}
+              {images.slice(1, 3).map((img, index) => (
+                <img
+                  key={index}
+                  className="rounded-xl object-cover object-center w-full h-full col-span-2 row-span-2"
+                  src={img}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex  w-[200px] px-4 justify-between py-2">
+          <div
+            className="flex items-center gap-2 "
+            onClick={() => setOpenCreateTweet(!openCreateTweet)}
+          >
+            <FaRegComment />
+            <p>25</p>
           </div>
-        )}
-      </div>
-      <div className="flex  w-[200px] px-4 justify-between py-2">
-        <div
-          className="flex items-center gap-2 "
-          onClick={() => setOpenCreateTweet(!openCreateTweet)}
-        >
-          <FaRegComment />
-          <p>25</p>
+          <div
+            className={`flex items-center gap-2 ${
+              likesToggle ? "bg-secondary" : "bg-none"
+            }`}
+            onClick={handleLikesCounting}
+          >
+            <FaRegHeart />
+            <p>{likesCount}</p>
+          </div>
         </div>
-        <div
-          className={`flex items-center gap-2 ${
-            likesToggle ? "bg-secondary" : "bg-none"
-          }`}
-          onClick={handleLikesCounting}
-        >
-          <FaRegHeart />
-          <p>{likesCount}</p>
-        </div>
-      </div>
-      <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
-        <CreateTweet />
-      </AuthModal>
-    </Link>
+        <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
+          <CreateTweet />
+        </AuthModal>
+      </Link>
+    </div>
   );
 };
 

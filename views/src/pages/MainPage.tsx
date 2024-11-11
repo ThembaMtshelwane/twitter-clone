@@ -7,7 +7,7 @@ const MainPage = () => {
     "https://cdn.pixabay.com/photo/2023/10/03/10/06/ai-generated-8291089_640.png",
   ];
   return (
-    <div className=" w-[90%] sm:w-[80%] md:w-[70%] grid lg:grid-cols-2 gap-5 relative  min-h-[80vh] mx-auto md:ml-auto">
+    <div className="  grid lg:grid-cols-2 gap-5 relative">
       <div className="space-y-5">
         <Tweet images={images} id={1} />
         <Tweet

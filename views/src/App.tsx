@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import SinglePost from "./pages/SinglePost";
 import MainLayout from "./layouts/MainLayout";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ export default function App() {
         {
           path: "tweet/:id",
           element: <SinglePost />,
+        },
+        {
+          path: "profile",
+          element: <ProfilePage />,
         },
       ],
     },
