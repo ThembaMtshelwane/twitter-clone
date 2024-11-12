@@ -13,7 +13,7 @@ const AuthModal = ({ isOpen, setIsOpen, children }: AuthModalProps) => {
     <>
       {isOpen && (
         <section className="fixed inset-0 bg-black bg-opacity-80 top-0 left-0 flex z-50 overflow-y-auto">
-          <div className="bg-primary w-full max-w-[550px] mx-auto my-auto  min-h-[50vh]  rounded-3xl p-8  ">
+          <div className="bg-primary w-full max-w-[650px] mx-auto my-auto  min-h-[50vh]  rounded-3xl p-8  ">
             <div
               className="text-2xl absolute cursor-pointer"
               onClick={() => setIsOpen(false)}

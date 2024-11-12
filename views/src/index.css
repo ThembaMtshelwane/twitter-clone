@@ -13,5 +13,5 @@ button {
 
 input,
 textarea {
-  @apply border py-2 px-4 text-lg bg-primary;
+  @apply border py-2 px-4 text-lg bg-primary w-full;
 }
