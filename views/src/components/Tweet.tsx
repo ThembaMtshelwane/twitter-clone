@@ -13,6 +13,7 @@ const Tweet = ({ images, id }: TweetProps) => {
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);
   const [followToggle, seFollowToggle] = useState(false);
+  const user = 1;
 
   const handleLikesCounting = () => {
     if (likesToggle) {
@@ -41,20 +42,23 @@ const Tweet = ({ images, id }: TweetProps) => {
             <h3 className="text-sm text-gray-500">Username</h3>
           </Link>
         </div>
-        <button
-          className={`bg-secondary col-[2/3] mx-4  w-[120px] px-2 py-1 text-sm rounded  ${
-            followToggle
-              ? "hover:bg-red-400 hover:border-red-400 hover:border"
-              : ""
-          }`}
-          onClick={() => seFollowToggle((prev) => !prev)}
-        >
-          {followToggle ? "Following" : "Follow ?"}
-        </button>
+
+        {id !== user && (
+          <button
+            className={`bg-secondary col-[2/3] mx-4  w-[120px] px-2 py-1 text-sm rounded  ${
+              followToggle
+                ? "hover:bg-red-400 hover:border-red-400 hover:border"
+                : ""
+            }`}
+            onClick={() => seFollowToggle((prev) => !prev)}
+          >
+            {followToggle ? "Following" : "Follow ?"}
+          </button>
+        )}
       </div>
 
       <Link to={`/index/tweet/${id}`}>
-        <p>
+        <p className=" text-justify">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit a in
           sit corporis voluptatibus voluptas saepe dolorem, cum maxime, hic
           aspernatur natus, vero eius sapiente.
