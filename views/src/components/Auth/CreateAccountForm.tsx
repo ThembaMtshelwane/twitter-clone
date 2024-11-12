@@ -1,9 +1,11 @@
 import { FormEvent } from "react";
 import { useUser } from "../../api/users";
 import { User } from "../../definitions";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccountForm = () => {
   const { createUser } = useUser();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -13,9 +15,9 @@ const CreateAccountForm = () => {
     const res = await createUser(newUser);
 
     if (res?.success) {
-      console.log(res.message);
+      navigate("/index");
     } else {
-      console.error("Failed to create account:", res?.message);
+      console.error("Failed to create account:");
     }
   };
 

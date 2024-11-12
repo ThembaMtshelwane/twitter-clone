@@ -18,7 +18,7 @@ export const useUser = create<UserStore>((set) => ({
 
   setUser: (user: User) => set((state) => ({ users: [...state.users, user] })),
 
-  createUser: async (newUser: User): Promise<CreateUserResponse | null> => {
+  createUser: async (newUser: User) => {
     try {
       const res = await axios.post("/api/users", newUser, {
         headers: {
