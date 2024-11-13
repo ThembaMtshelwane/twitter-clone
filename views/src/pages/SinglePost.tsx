@@ -1,5 +1,5 @@
 import CommentsSection from "../components/CommentsSection";
-import Tweet from "../components/Tweet";
+import Tweet from "../components/TweetContent";
 
 const SinglePost = () => {
   const images = [

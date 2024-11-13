@@ -1,4 +1,4 @@
-import Tweet from "./Tweet";
+import Tweet from "./TweetContent";
 
 const CommentsSection = () => {
   const data = [1, 2, 3, 4];

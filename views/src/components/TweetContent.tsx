@@ -2,18 +2,41 @@ import { FaRegComment, FaRegHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Tweet } from "../definitions";
+import { useUser } from "../api/users";
 
 type TweetProps = {
-  images: string[];
-  id: number;
+  tweet: Tweet;
 };
-const Tweet = ({ images, id }: TweetProps) => {
+
+// const defaultUser = {
+//   _id: "",
+//   username: "",
+//   password: "",
+//   firstName: "",
+//   lastName: "",
+//   DOB: "",
+//   email: "",
+//   createdAt: "",
+//   updatedAt: "",
+// };
+
+const TweetContent = ({ tweet }: TweetProps) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);
   const [followToggle, seFollowToggle] = useState(false);
-  const user = 1;
+  const { fetchUser, users } = useUser();
+  const currentUser = "67346a6ed8813e388dc12182";
+
+  const user = users.find((u) => u._id === tweet.userId);
+
+  useEffect(() => {
+    if (!user) {
+      fetchUser(tweet.userId);
+    }
+  }, [fetchUser, tweet.userId, user]);
 
   const handleLikesCounting = () => {
     if (likesToggle) {
@@ -32,18 +55,20 @@ const Tweet = ({ images, id }: TweetProps) => {
         >
           <img
             className="object-cover object-center h-full w-[100px] rounded-full"
-            src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
+            src="https://images.unsplash.com/photo-1546453667-8a8d2d07bc20?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
           />
         </Link>
         <div className=" flex flex-col col-span-4 mx-4">
           <Link to={`/index/profile`}>
-            <h3 className="text-xl">Full name</h3>
-            <h3 className="text-sm text-gray-500">Username</h3>
+            <h3 className="text-xl">
+              {user?.firstName} {user?.lastName}
+            </h3>
+            <h3 className="text-sm text-gray-500">{user?.username}</h3>
           </Link>
         </div>
 
-        {id !== user && (
+        {tweet.userId !== currentUser && (
           <button
             className={`bg-secondary col-[2/3] mx-4  w-[120px] px-2 py-1 text-sm rounded  ${
               followToggle
@@ -57,48 +82,44 @@ const Tweet = ({ images, id }: TweetProps) => {
         )}
       </div>
 
-      <Link to={`/index/tweet/${id}`}>
-        <p className=" text-justify">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit a in
-          sit corporis voluptatibus voluptas saepe dolorem, cum maxime, hic
-          aspernatur natus, vero eius sapiente.
-        </p>
+      <Link to={`/index/tweet/${tweet._id}`}>
+        <p className=" text-justify">{tweet.caption}</p>
 
         <div className="my-4">
-          {images.length === 1 && (
+          {tweet.media.length === 1 && (
             <img
               className="rounded-xl object-cover object-center w-full max-w-[450px] mx-auto"
-              src={images[0]}
+              src={tweet.media[0].url}
               alt=""
             />
           )}
 
-          {images.length === 2 && (
+          {tweet.media.length === 2 && (
             <div className="grid grid-cols-2 gap-4 h-full">
-              {images.slice(0, 2).map((img, index) => (
+              {tweet.media.slice(0, 2).map((data, index) => (
                 <img
                   key={index}
                   className="rounded-xl object-cover object-center w-full h-full"
-                  src={img}
+                  src={data.url}
                   alt=""
                 />
               ))}
             </div>
           )}
 
-          {images.length >= 3 && (
+          {tweet.media.length >= 3 && (
             <div className="grid grid-cols-6 grid-rows-4 gap-4 h-full">
               <img
                 key={0}
                 className="rounded-xl object-cover object-center w-full h-full col-span-4 row-span-4"
-                src={images[0]}
+                src={tweet.media[0].url}
                 alt=""
               />
-              {images.slice(1, 3).map((img, index) => (
+              {tweet.media.slice(1, 3).map((data, index) => (
                 <img
                   key={index}
                   className="rounded-xl object-cover object-center w-full h-full col-span-2 row-span-2"
-                  src={img}
+                  src={data.url}
                   alt=""
                 />
               ))}
@@ -111,7 +132,7 @@ const Tweet = ({ images, id }: TweetProps) => {
             onClick={() => setOpenCreateTweet(!openCreateTweet)}
           >
             <FaRegComment />
-            <p>25</p>
+            <p>{tweet.comments.length}</p>
           </div>
           <div
             className={`flex items-center gap-2 ${
@@ -120,7 +141,7 @@ const Tweet = ({ images, id }: TweetProps) => {
             onClick={handleLikesCounting}
           >
             <FaRegHeart />
-            <p>{likesCount}</p>
+            <p>{tweet.likes.length}</p>
           </div>
         </div>
         <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
@@ -131,4 +152,4 @@ const Tweet = ({ images, id }: TweetProps) => {
   );
 };
 
-export default Tweet;
+export default TweetContent;

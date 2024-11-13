@@ -1,5 +1,5 @@
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import Tweet from "../components/Tweet";
+import Tweet from "../components/TweetContent";
 import AuthModal from "../components/Auth/AuthModal";
 import EditUserForm from "../components/EditUserForm";
 import { useState } from "react";
