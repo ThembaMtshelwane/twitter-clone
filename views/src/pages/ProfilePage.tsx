@@ -2,16 +2,22 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 import Tweet from "../components/TweetContent";
 import AuthModal from "../components/Auth/AuthModal";
 import EditUserForm from "../components/EditUserForm";
-import { useState } from "react";
-
-const images = [
-  "https://wallpapers.com/images/featured/best-cool-pictures-40lkhq7b7tl3p1qw.jpg",
-  "https://marketplace.canva.com/EAFJDaBwwC0/1/0/900w/canva-violet-and-yellow-retro-cool-minimalist-trippy-psychedelic-phone-wallpaper-iO7OSY0gJcs.jpg",
-  "https://cdn.pixabay.com/photo/2023/10/03/10/06/ai-generated-8291089_640.png",
-];
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useTweet } from "../api/tweets";
+import { useUser } from "../api/users";
 
 const ProfilePage = () => {
   const [openEdit, setOpenEdit] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const { users } = useUser();
+  const { fetchTweets, tweets } = useTweet();
+  const user = users.find((u) => u._id === id);
+
+  useEffect(() => {
+    fetchTweets();
+  }, [fetchTweets]);
+
   return (
     <section className="flex flex-col">
       <div
@@ -36,22 +42,25 @@ const ProfilePage = () => {
           alt=""
         />
         <div className="ml-4 w-full">
-          <h3 className="text-xl">Full name</h3>
-          <h3 className="text">Username</h3>
+          <h3 className="text-xl">
+            {user?.firstName} {user?.lastName}
+          </h3>
+          <h3 className="text">@{user?.username}</h3>
 
           <div className="flex gap-2  sm:flex-row">
-            <p> 455 Followers </p>
-            <p> 362 Following </p>
+            <p> {user?.followers?.length} followers</p>
+            <p> {0} following </p>
           </div>
         </div>
       </div>
       <div className="border-t ">
         <h3 className="text-3xl text-center my-5">Your Posts</h3>
         <section className="grid gap-3 my-2">
-          <Tweet images={images} id={1} />
-          <Tweet images={[]} id={1} />
-          <Tweet images={[]} id={1} />
-          <Tweet images={[]} id={1} />
+          {tweets
+            .filter((tweet) => tweet.userId === id)
+            .map((userTweet) => (
+              <Tweet tweet={userTweet} />
+            ))}
         </section>
       </div>
       <AuthModal isOpen={openEdit} setIsOpen={setOpenEdit}>

@@ -1,16 +1,34 @@
-import CommentsSection from "../components/CommentsSection";
-import Tweet from "../components/TweetContent";
+import { useParams } from "react-router-dom";
+// import CommentsSection from "../components/CommentsSection";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+import { Tweet } from "../definitions";
+import TweetContent from "../components/TweetContent";
+// import CommentsSection from "../components/CommentsSection";
+import { useTweet } from "../api/tweets";
+import { useEffect, useState } from "react";
 
 const SinglePost = () => {
-  const images = [
-    "https://wallpapers.com/images/featured/best-cool-pictures-40lkhq7b7tl3p1qw.jpg",
-    "https://marketplace.canva.com/EAFJDaBwwC0/1/0/900w/canva-violet-and-yellow-retro-cool-minimalist-trippy-psychedelic-phone-wallpaper-iO7OSY0gJcs.jpg",
-    "https://cdn.pixabay.com/photo/2023/10/03/10/06/ai-generated-8291089_640.png",
-  ];
+  const defaultTweet = {
+    _id: "",
+    caption: "",
+    userId: "",
+    media: [],
+    likes: [],
+    comments: [],
+  };
+  const { id } = useParams<{ id: string }>();
+  const { tweets } = useTweet();
+  const [userTweet, setTweet] = useState<Tweet>(defaultTweet);
+  useEffect(() => {
+    const tweet = tweets.find((t) => t._id === id) as Tweet;
+    setTweet(tweet);
+  }, [id, tweets]);
+
   return (
     <div className="">
-      <Tweet images={images} id={4} />
-      <CommentsSection />
+      <TweetContent tweet={userTweet} />
+      {/* <CommentsSection /> */}
     </div>
   );
 };

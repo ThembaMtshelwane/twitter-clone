@@ -7,17 +7,28 @@ type CreateTweetResponse = {
   message?: string;
 };
 
+const defaultEmptyTweet = {
+  _id: "",
+  caption: "",
+  userId: "",
+  media: [],
+  likes: [],
+  comments: [],
+};
 type TweetStore = {
   tweets: Tweet[];
+  tweet: Tweet;
   setTweet: (tweet: Tweet) => void;
   createTweet: (newTweet: Tweet) => Promise<CreateTweetResponse | null>;
   fetchTweets: () => Promise<void>;
 };
 
-export const useTweet = create<TweetStore>((set) => ({
+export const useTweet = create<TweetStore>((set, get) => ({
   tweets: [],
+  tweet: defaultEmptyTweet,
 
-  setTweet: (tweet: Tweet) => set((state) => ({ tweets: [...state.tweets, tweet] })),
+  setTweet: (tweet: Tweet) =>
+    set((state) => ({ tweets: [...state.tweets, tweet] })),
 
   createTweet: async (newTweet: Tweet) => {
     try {
@@ -51,6 +62,24 @@ export const useTweet = create<TweetStore>((set) => ({
       set({ tweets: data.data });
     } catch (error) {
       console.error(error);
+    }
+  },
+  fetchTweet: async (id: string) => {
+    try {
+      const { tweets } = get();
+      const tweetExists = tweets.find((tweet) => tweet._id === id);
+
+      if (!tweetExists) {
+        const res = await axios.get(`/api/users/${id}`);
+        const data = res.data;
+        set({ tweets: [...tweets, data.data] });
+      } else {
+        const res = await axios.get(`/api/tweets/${id}`);
+        const data = res.data;
+        set({ tweet: data.data }); // Update single tweet state
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
     }
   },
 }));

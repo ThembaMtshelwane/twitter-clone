@@ -8,6 +8,8 @@ const MainPage = () => {
     fetchTweets();
   }, [fetchTweets]);
 
+  if (!tweets.length) return <h1>No Available Tweets</h1>;
+
   return (
     <div className="  grid lg:grid-cols-2 gap-5 relative">
       {tweets.map((tweet, index) =>

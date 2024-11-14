@@ -16,16 +16,19 @@ export type User = {
 export type Media = {
   mediaId: string;
   url: string;
+  tweetId: string;
   createdAt: string;
 };
 
 export type Like = {
   userId: string;
+  tweetId: string;
   likedAt: string;
 };
 
 export type Comment = {
   userId: string;
+  tweetId: string;
   comment: string;
   commentedAt: string;
 };
