@@ -14,6 +14,8 @@ const defaultEmptyTweet = {
   media: [],
   likes: [],
   comments: [],
+  createdAt: "",
+  updatedAt: "",
 };
 type TweetStore = {
   tweets: Tweet[];
@@ -30,7 +32,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
   setTweet: (tweet: Tweet) =>
     set((state) => ({ tweets: [...state.tweets, tweet] })),
 
-  createTweet: async (newTweet: Tweet) => {
+  createTweet: async (newTweet) => {
     try {
       const res = await axios.post("/api/tweets", newTweet, {
         headers: {

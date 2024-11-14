@@ -1,5 +1,9 @@
 import { useState, useCallback, useMemo } from "react";
 import { IoIosAddCircleOutline, IoMdCloseCircle } from "react-icons/io";
+import { useTweet } from "../api/tweets";
+import ObjectID from "bson-objectid";
+import { Tweet } from "../definitions";
+import { compressImage } from "../utils";
 
 const MAX_IMAGES = 3;
 const MAX_CAPTION_LENGTH = 105;
@@ -7,30 +11,23 @@ const MAX_CAPTION_LENGTH = 105;
 const CreateTweet = () => {
   const [images, setImages] = useState<string[]>([]);
   const [caption, setCaption] = useState("");
+  const { createTweet } = useTweet();
 
   const handleImageChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = Array.from(event.target.files || []);
       const validImages = files.filter((file) =>
         file.type.startsWith("image/")
       );
 
-      const imagePromises = validImages.map(
-        (file) =>
-          new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              resolve(reader.result as string); // Base64 string
-            };
-            reader.readAsDataURL(file); // Convert image to Base64
-          })
+      const compressedImagePromises = validImages.map((file) =>
+        compressImage(file)
       );
+      const compressedBase64Images = await Promise.all(compressedImagePromises);
 
-      Promise.all(imagePromises).then((base64Images) => {
-        setImages((prevImages) => {
-          const newImages = [...prevImages, ...base64Images];
-          return newImages.slice(0, MAX_IMAGES); // Limit to MAX_IMAGES
-        });
+      setImages((prevImages) => {
+        const newImages = [...prevImages, ...compressedBase64Images];
+        return newImages.slice(0, MAX_IMAGES); 
       });
     },
     []
@@ -47,10 +44,29 @@ const CreateTweet = () => {
     []
   );
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const tweetData = { caption, images };
+
+    const tweetId = new ObjectID().toString();
+    const media = images.map((img) => ({
+      mediaId: new ObjectID().toString(),
+      url: img,
+      tweetId,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }));
+
+    const tweetData: Tweet = {
+      _id: tweetId,
+      caption,
+      media,
+      userId: "67346a6ed8813e388dc12182",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
     console.log("Form submitted with data:", tweetData);
+    await createTweet(tweetData);
     setCaption("");
     setImages([]);
   };

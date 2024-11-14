@@ -18,6 +18,7 @@ export type Media = {
   url: string;
   tweetId: string;
   createdAt: string;
+  updatedAt: string;
 };
 
 export type Like = {
@@ -29,14 +30,14 @@ export type Like = {
 export type Comment = {
   userId: string;
   tweetId: string;
-  comment: string;
-  commentedAt: string;
 };
 export type Tweet = {
   _id: string;
   caption: string;
   userId: string;
-  media: Media[];
-  likes: Like[];
-  comments: Comment[];
+  media?: Media[];
+  likes?: Like[];
+  comments?: Comment[];
+  createdAt: string;
+  updatedAt: string;
 };
