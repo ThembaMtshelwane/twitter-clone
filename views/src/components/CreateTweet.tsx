@@ -27,7 +27,7 @@ const CreateTweet = () => {
 
       setImages((prevImages) => {
         const newImages = [...prevImages, ...compressedBase64Images];
-        return newImages.slice(0, MAX_IMAGES); 
+        return newImages.slice(0, MAX_IMAGES);
       });
     },
     []
@@ -60,7 +60,7 @@ const CreateTweet = () => {
       _id: tweetId,
       caption,
       media,
-      userId: "67346a6ed8813e388dc12182",
+      userId: "67346ab0d8813e388dc12188",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

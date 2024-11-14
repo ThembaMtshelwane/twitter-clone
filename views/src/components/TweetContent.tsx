@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
 import { useEffect, useState } from "react";
-import { Tweet } from "../definitions";
+import { Media, Tweet } from "../definitions";
 import { useUser } from "../api/users";
 
 type TweetProps = {
@@ -26,7 +26,6 @@ const TweetContent = ({ tweet }: TweetProps) => {
     }
   }, [fetchUser, user, tweet.userId]);
 
-
   if (!tweet.userId) {
     return <div>Invalid tweet data: Missing userId</div>;
   }
@@ -48,7 +47,7 @@ const TweetContent = ({ tweet }: TweetProps) => {
         >
           <img
             className="object-cover object-center h-full w-[100px] rounded-full"
-            src="https://images.unsplash.com/photo-1546453667-8a8d2d07bc20?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://tweet.media.unsplash.com/photo-1546453667-8a8d2d07bc20?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
           />
         </Link>
@@ -78,31 +77,14 @@ const TweetContent = ({ tweet }: TweetProps) => {
       <Link to={`/index/tweet/${tweet._id}`}>
         <p className=" text-justify">{tweet.caption}</p>
 
-        <div className="my-4">
-          {tweet.media.map((data, index) => (
-            <img
-              key={index}
-              className={`rounded-xl object-cover object-center w-full h-full ${
-                tweet.media.length === 1
-                  ? ""
-                  : tweet.media.length === 2
-                  ? "col-span-1 row-span-1"
-                  : index === 0
-                  ? "col-span-4 row-span-4"
-                  : "col-span-2 row-span-2"
-              }`}
-              src={data.url}
-              alt=""
-            />
-          ))}
-        </div>
+        <ImageDisplay mediaArray={tweet.media || []} />
         <div className="flex  w-[200px] px-4 justify-between py-2">
           <div
             className="flex items-center gap-2 "
             onClick={() => setOpenCreateTweet(!openCreateTweet)}
           >
             <FaRegComment />
-            <p>{tweet.comments.length}</p>
+            <p>{tweet.comments?.length}</p>
           </div>
           <div
             className={`flex items-center gap-2 ${
@@ -111,7 +93,7 @@ const TweetContent = ({ tweet }: TweetProps) => {
             onClick={handleLikesCounting}
           >
             <FaRegHeart />
-            <p>{tweet.likes.length}</p>
+            <p>{tweet.likes?.length}</p>
           </div>
         </div>
         <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
@@ -123,3 +105,48 @@ const TweetContent = ({ tweet }: TweetProps) => {
 };
 
 export default TweetContent;
+
+const ImageDisplay = ({ mediaArray }: { mediaArray: Media[] }) => {
+  return (
+    <div className="my-4">
+      {mediaArray.length === 0 && <>''</>}
+      {mediaArray.length === 1 && (
+        <img
+          className="rounded-xl object-cover object-center w-full max-w-[450px] mx-auto"
+          src={mediaArray[0].url}
+          alt=""
+        />
+      )}
+      {mediaArray?.length === 2 && (
+        <div className="grid grid-cols-2 gap-4">
+          {mediaArray.slice(0, 2).map((media, index) => (
+            <img
+              key={index}
+              className="rounded-xl object-cover object-center w-full h-full"
+              src={media.url}
+              alt=""
+            />
+          ))}
+        </div>
+      )}
+      {mediaArray.length >= 3 && (
+        <div className="grid grid-cols-6 grid-rows-4 gap-4">
+          <img
+            key={0}
+            className="rounded-xl object-cover object-center w-full h-full col-span-4 row-span-4"
+            src={mediaArray[0].url}
+            alt=""
+          />
+          {mediaArray.slice(1, 3).map((media, index) => (
+            <img
+              key={index}
+              className="rounded-xl object-cover object-center w-full h-full col-span-2 row-span-2"
+              src={media.url}
+              alt=""
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
