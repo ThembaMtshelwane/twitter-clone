@@ -45,7 +45,7 @@ const SinglePost = () => {
   return (
     <div className="">
       <TweetContent tweet={tweet} />
-      <CommentsSection parentTweetId={id} />
+      <CommentsSection parentTweetId={id || ""} />
     </div>
   );
 };
