@@ -38,7 +38,7 @@ const ProfilePage = () => {
       <div className="flex items-center my-3 p-4">
         <img
           className="w-[70px] h-[60px] md:w-[90px] md:h-[80px] object-cover object-center rounded-full"
-          src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg"
+          src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
           alt=""
         />
         <div className="ml-4 w-full">
@@ -59,7 +59,7 @@ const ProfilePage = () => {
           {tweets
             .filter((tweet) => tweet.userId === id)
             .map((userTweet) => (
-              <Tweet tweet={userTweet} />
+              <Tweet tweet={userTweet} key={userTweet._id} />
             ))}
         </section>
       </div>

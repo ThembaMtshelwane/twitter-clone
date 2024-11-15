@@ -19,7 +19,6 @@ const TweetContent = ({ tweet }: TweetProps) => {
   const currentUser = "67346a6ed8813e388dc12182";
   const user = users.find((u) => u._id === tweet.userId);
 
-  console.log("TweetContent received tweet:", tweet);
   useEffect(() => {
     if (!user) {
       fetchUser(tweet.userId);
@@ -47,7 +46,7 @@ const TweetContent = ({ tweet }: TweetProps) => {
         >
           <img
             className="object-cover object-center h-full w-[100px] rounded-full"
-            src="https://tweet.media.unsplash.com/photo-1546453667-8a8d2d07bc20?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
             alt=""
           />
         </Link>

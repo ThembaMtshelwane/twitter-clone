@@ -14,6 +14,7 @@ type Props = {
 
 const Sidebar = ({ isOpen, setIsOpen }: Props) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
+  const currentDummyUserId = "67346a6ed8813e388dc12182";
   return (
     <>
       {isOpen && (
@@ -40,7 +41,7 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
                 <h2>Search</h2>
               </div> */}
               <Link
-                to="/index/profile"
+                to={`/index/profile/${currentDummyUserId}`}
                 className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center"
                 onClick={() => setIsOpen(false)}
               >
@@ -69,7 +70,10 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
         {/* <Link to="" className="text-xl cursor-pointer">
           <IoSearch />
         </Link> */}
-        <Link to="/index/profile" className="text-2xl cursor-pointer">
+        <Link
+          to={`/index/profile/${currentDummyUserId}`}
+          className="text-2xl cursor-pointer"
+        >
           <CgProfile />
         </Link>
         <div
