@@ -17,7 +17,7 @@ export type Media = {
   mediaId: string;
   url: string;
   tweetId: string;
-  createdAt: string;
+  createdAt?: string;
   updatedAt: string;
 };
 
@@ -38,7 +38,10 @@ export type Tweet = {
   media?: Media[];
   likes?: Like[];
   comments?: Comment[];
-  createdAt: string;
+  createdAt?: string;
   updatedAt: string;
   parentTweetId?: string;
 };
+
+export const MAX_IMAGES = 3;
+export const MAX_CAPTION_LENGTH = 105;

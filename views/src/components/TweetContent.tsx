@@ -5,8 +5,10 @@ import CreateTweet from "./CreateTweet";
 import { useState } from "react";
 import { Media, Tweet } from "../definitions";
 
-import UserPreview, { FollowButtons } from "./UserPreview";
+import UserPreview from "./UserPreview";
 import { AlterButtons } from "./Buttons/AlterButtons";
+import FollowButtons from "./Buttons/FollowButtons";
+import { currentDummyUser } from "../utils";
 
 type TweetProps = {
   tweet: Tweet;
@@ -16,7 +18,6 @@ const TweetContent = ({ tweet }: TweetProps) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);
-  const currentUser = "67346a6ed8813e388dc12182";
 
   if (!tweet.userId) {
     return <div>Invalid tweet data: Missing userId</div>;
@@ -30,11 +31,14 @@ const TweetContent = ({ tweet }: TweetProps) => {
     }
     setLikesToggle((prev) => !prev);
   };
+  console.log("TweetContent tweet caption:", tweet.caption);
+  console.log("TweetContent tweet id:", tweet._id);
+
   return (
     <div className=" p-5 rounded-lg border border-secondary ">
       <UserPreview tweet={tweet}>
         <>
-          {tweet.userId !== currentUser ? (
+          {tweet.userId !== currentDummyUser ? (
             <FollowButtons />
           ) : (
             <AlterButtons id={tweet._id} />

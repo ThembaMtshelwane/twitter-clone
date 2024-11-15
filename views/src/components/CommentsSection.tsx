@@ -7,7 +7,6 @@ const CommentsSection = ({ parentTweetId = "" }: { parentTweetId: string }) => {
   useEffect(() => {
     fetchCommentTweets(parentTweetId);
   }, [fetchCommentTweets, parentTweetId]);
-  console.log("comments  ", comments);
 
   return (
     <>

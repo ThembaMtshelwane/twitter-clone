@@ -9,7 +9,7 @@ export const compressImage = (file: File): Promise<string> => {
 
     img.onload = () => {
       const canvas = document.createElement("canvas");
-      const maxDimension = 500; 
+      const maxDimension = 500;
       let width = img.width;
       let height = img.height;
 
@@ -50,3 +50,5 @@ export const defaultEmptyTweet = {
   createdAt: "",
   updatedAt: "",
 };
+
+export const currentDummyUser = "67346a6ed8813e388dc12182";

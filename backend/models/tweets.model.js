@@ -22,7 +22,7 @@ const tweetSchema = new mongoose.Schema({
         ref: "Tweet",
         required: true,
       },
-      createdAt: { type: String, required: true },
+      createdAt: { type: String },
       updatedAt: { type: String, required: true },
     },
   ],
@@ -58,7 +58,7 @@ const tweetSchema = new mongoose.Schema({
       },
     },
   ],
-  createdAt: { type: String, required: true },
+  createdAt: { type: String },
   updatedAt: { type: String, required: true },
 });
 

@@ -1,15 +1,14 @@
-import { useState, useCallback, useMemo } from "react";
-import { useTweet } from "../api/tweets";
-import ObjectID from "bson-objectid";
-import { Tweet, Comment, MAX_IMAGES, MAX_CAPTION_LENGTH } from "../definitions";
-import { compressImage } from "../utils";
+import { useCallback, useMemo, useState } from "react";
+import { MAX_CAPTION_LENGTH, MAX_IMAGES, Tweet, Media } from "../definitions";
 import { CaptionTextarea, FileInput, ImagePreviews } from "./TweetElements";
+import { useTweet } from "../api/tweets";
+import { compressImage } from "../utils";
+import ObjectID from "bson-objectid";
 
-const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
-  const [images, setImages] = useState<string[]>([]);
-  const [caption, setCaption] = useState("");
-  const { createTweet, updateTweet } = useTweet();
-  const currentDummyUser = "67346ab0d8813e388dc12188";
+const EditTweet = ({ id, tweet }: { id: string; tweet: Tweet }) => {
+  const [images, setImages] = useState<Media[]>(tweet.media || []);
+  const [caption, setCaption] = useState<string>(tweet.caption || "");
+  const { updateTweet } = useTweet();
 
   const handleImageChange = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,11 +23,16 @@ const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
       const compressedBase64Images = await Promise.all(compressedImagePromises);
 
       setImages((prevImages) => {
-        const newImages = [...prevImages, ...compressedBase64Images];
-        return newImages.slice(0, MAX_IMAGES);
+        const newImages: Media[] = compressedBase64Images.map((img) => ({
+          mediaId: new ObjectID().toString(),
+          url: img,
+          tweetId: id,
+          updatedAt: new Date().toISOString(),
+        }));
+        return [...prevImages, ...newImages].slice(0, MAX_IMAGES);
       });
     },
-    []
+    [id]
   );
 
   const removeImage = useCallback((index: number) => {
@@ -45,53 +49,28 @@ const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const tweetId = new ObjectID().toString();
-    const media = images.map((img) => ({
-      mediaId: new ObjectID().toString(),
-      url: img,
-      tweetId,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    }));
-
-    const tweetData: Tweet = {
-      _id: tweetId,
+    const updatedTweet: Partial<Tweet> = {
       caption,
-      userId: currentDummyUser,
-      media,
-      createdAt: new Date().toISOString(),
+      media: images,
       updatedAt: new Date().toISOString(),
-      parentTweetId,
     };
 
-    console.log("Form submitted with data:", tweetData);
-    await createTweet(tweetData);
-
-    if (parentTweetId) {
-      const newComment: Comment = {
-        userId: currentDummyUser,
-        tweetId: tweetId,
-      };
-      const addedComments = {
-        comments: [newComment],
-      };
-      await updateTweet(parentTweetId, addedComments);
-    }
-    setCaption("");
-    setImages([]);
+    console.log("Updating tweet with data:", updatedTweet);
+    console.log("Updating tweet with id:", id);
+    await updateTweet(id, updatedTweet);
   };
 
   const imagePreviews = useMemo(
     () =>
-      images.map((imgBase64) => ({
-        preview: imgBase64,
+      images.map((media) => ({
+        preview: media.url,
       })),
     [images]
   );
 
   return (
-    <section className="">
-      <h1 className="text-2xl font-semibold mb-4">Create Tweet</h1>
+    <section className="p-4 bg-primary rounded-lg shadow-md">
+      <h1 className="text-2xl font-semibold mb-4">Edit Tweet</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <FileInput
           onChange={handleImageChange}
@@ -107,11 +86,11 @@ const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
           type="submit"
           className="w-full py-2 bg-secondary text-white rounded-lg font-semibold hover:bg-secondary-dark"
         >
-          Post
+          Update
         </button>
       </form>
     </section>
   );
 };
 
-export default CreateTweet;
+export default EditTweet;

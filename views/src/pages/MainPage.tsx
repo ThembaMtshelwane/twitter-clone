@@ -10,19 +10,20 @@ const MainPage = () => {
 
   if (!tweets.length) return <h1>No Available Tweets</h1>;
 
+  const leftCol = tweets.filter((_, index) => index % 2 === 0);
+  const rightCol = tweets.filter((_, index) => index % 2 !== 0);
+
   return (
     <div className=" grid lg:grid-cols-2 gap-5 relative">
       <div className="space-y-5">
-        {tweets.map(
-          (tweet, index) =>
-            index % 2 === 0 && <Tweet tweet={tweet} key={tweet._id} />
-        )}
+        {leftCol.map((tweet) => (
+          <Tweet tweet={tweet} key={tweet._id} />
+        ))}
       </div>
       <div className="space-y-5">
-        {tweets.map(
-          (tweet, index) =>
-            index % 2 !== 0 && <Tweet tweet={tweet} key={tweet._id} />
-        )}
+        {rightCol.map((tweet) => (
+          <Tweet tweet={tweet} key={tweet._id} />
+        ))}
       </div>
     </div>
   );
