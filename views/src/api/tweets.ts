@@ -18,6 +18,7 @@ type TweetStore = {
   fetchTweet: (id: string) => Promise<void>;
   updateTweet: (id: string, updatedFields: Partial<Tweet>) => Promise<void>;
   fetchCommentTweets: (id: string) => Promise<void>;
+  deleteTweet: (id: string) => Promise<void>;
 };
 
 export const useTweet = create<TweetStore>((set, get) => ({
@@ -78,6 +79,22 @@ export const useTweet = create<TweetStore>((set, get) => ({
       }
     } catch (error) {
       console.error("Error fetching user:", error);
+    }
+  },
+
+  deleteTweet: async (id: string) => {
+    try {
+      const res = await axios.delete(`/api/tweets/${id}`);
+      if (res.data.success) {
+        set((state) => ({
+          tweets: state.tweets.filter((tweet) => tweet._id !== id),
+          tweet: state.tweet._id === id ? defaultEmptyTweet : state.tweet,
+        }));
+      } else {
+        console.error("Failed to delete tweet:", res.data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting tweet:", error);
     }
   },
 

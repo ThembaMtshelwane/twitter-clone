@@ -2,9 +2,11 @@ import { FaRegComment, FaRegHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Media, Tweet } from "../definitions";
-import { useUser } from "../api/users";
+
+import UserPreview, { FollowButtons } from "./UserPreview";
+import { AlterButtons } from "./Buttons/AlterButtons";
 
 type TweetProps = {
   tweet: Tweet;
@@ -14,16 +16,7 @@ const TweetContent = ({ tweet }: TweetProps) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);
-  const [followToggle, seFollowToggle] = useState(false);
-  const { users, fetchUser } = useUser();
   const currentUser = "67346a6ed8813e388dc12182";
-  const user = users.find((u) => u._id === tweet.userId);
-
-  useEffect(() => {
-    if (!user) {
-      fetchUser(tweet.userId);
-    }
-  }, [fetchUser, user, tweet.userId]);
 
   if (!tweet.userId) {
     return <div>Invalid tweet data: Missing userId</div>;
@@ -39,41 +32,15 @@ const TweetContent = ({ tweet }: TweetProps) => {
   };
   return (
     <div className=" p-5 rounded-lg border border-secondary ">
-      <div className="grid grid-cols-5 grid-rows-2 items-center mb-5 h-[110px]">
-        <Link
-          to={`/index/profile/${user?._id}`}
-          className="col-[1/2] row-[1/3]  h-full w-full flex items-center justify-center"
-        >
-          <img
-            className="object-cover object-center h-full w-[100px] rounded-full"
-            src={
-              "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
-            }
-            alt=""
-          />
-        </Link>
-        <div className=" flex flex-col col-span-4 mx-4">
-          <Link to={`/index/profile/${user?._id}`}>
-            <h3 className="text-xl">
-              {user?.firstName} {user?.lastName}
-            </h3>
-            <h3 className="text-sm text-gray-500">@{user?.username}</h3>
-          </Link>
-        </div>
-
-        {tweet.userId !== currentUser && (
-          <button
-            className={`bg-secondary col-[2/3] mx-4  w-[120px] px-2 py-1 text-sm rounded  ${
-              followToggle
-                ? "hover:bg-red-400 hover:border-red-400 hover:border"
-                : ""
-            }`}
-            onClick={() => seFollowToggle((prev) => !prev)}
-          >
-            {followToggle ? "Following" : "Follow ?"}
-          </button>
-        )}
-      </div>
+      <UserPreview tweet={tweet}>
+        <>
+          {tweet.userId !== currentUser ? (
+            <FollowButtons />
+          ) : (
+            <AlterButtons id={tweet._id} />
+          )}
+        </>
+      </UserPreview>
 
       <Link to={`/index/tweet/${tweet._id}`}>
         <p className=" text-justify">{tweet.caption}</p>

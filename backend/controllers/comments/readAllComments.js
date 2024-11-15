@@ -29,9 +29,6 @@ export const readAllComments = async (req, res) => {
         return childTweet;
       })
     );
-
-    console.log("childTweets  ", childTweets);
-
     res.status(200).json({
       success: true,
       data: childTweets,
