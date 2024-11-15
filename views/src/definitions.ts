@@ -40,4 +40,5 @@ export type Tweet = {
   comments?: Comment[];
   createdAt: string;
   updatedAt: string;
+  parentTweetId?: string;
 };

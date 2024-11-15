@@ -58,8 +58,8 @@ const ProfilePage = () => {
         <section className="grid gap-3 my-2">
           {tweets
             .filter((tweet) => tweet.userId === id)
-            .map((userTweet) => (
-              <Tweet tweet={userTweet} key={userTweet._id} />
+            .map((userTweet, index) => (
+              <Tweet tweet={userTweet} key={userTweet._id + index} />
             ))}
         </section>
       </div>

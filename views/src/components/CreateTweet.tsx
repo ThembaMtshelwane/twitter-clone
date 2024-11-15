@@ -2,16 +2,17 @@ import { useState, useCallback, useMemo } from "react";
 import { IoIosAddCircleOutline, IoMdCloseCircle } from "react-icons/io";
 import { useTweet } from "../api/tweets";
 import ObjectID from "bson-objectid";
-import { Tweet } from "../definitions";
+import { Tweet, Comment } from "../definitions";
 import { compressImage } from "../utils";
 
 const MAX_IMAGES = 3;
 const MAX_CAPTION_LENGTH = 105;
 
-const CreateTweet = () => {
+const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
   const [images, setImages] = useState<string[]>([]);
   const [caption, setCaption] = useState("");
-  const { createTweet } = useTweet();
+  const { createTweet, updateTweet } = useTweet();
+  const currentDummyUser = "67346ab0d8813e388dc12188";
 
   const handleImageChange = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,14 +60,26 @@ const CreateTweet = () => {
     const tweetData: Tweet = {
       _id: tweetId,
       caption,
+      userId: currentDummyUser,
       media,
-      userId: "67346ab0d8813e388dc12188",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      parentTweetId,
     };
 
     console.log("Form submitted with data:", tweetData);
     await createTweet(tweetData);
+
+    if (parentTweetId) {
+      const newComment: Comment = {
+        userId: currentDummyUser,
+        tweetId: tweetId,
+      };
+      const addedComments = {
+        comments: [newComment],
+      };
+      await updateTweet(parentTweetId, addedComments);
+    }
     setCaption("");
     setImages([]);
   };

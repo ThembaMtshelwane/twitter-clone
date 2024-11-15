@@ -15,6 +15,7 @@ type TweetStore = {
   createTweet: (newTweet: Tweet) => Promise<CreateTweetResponse | null>;
   fetchTweets: () => Promise<void>;
   fetchTweet: (id: string) => Promise<void>;
+  updateTweet: (id: string, updatedFields: Partial<Tweet>) => Promise<void>;
 };
 
 export const useTweet = create<TweetStore>((set, get) => ({
@@ -80,6 +81,29 @@ export const useTweet = create<TweetStore>((set, get) => ({
       }
     } catch (error) {
       console.error("Error fetching user:", error);
+    }
+  },
+
+  updateTweet: async (id: string, updatedFields: Partial<Tweet>) => {
+    try {
+      const res = await axios.patch(`/api/tweets/${id}`, updatedFields);
+      const { success } = res.data;
+
+      if (success) {
+        set((state) => ({
+          tweets: state.tweets.map((tweet) =>
+            tweet._id === id ? { ...tweet, ...updatedFields } : tweet
+          ),
+          tweet:
+            state.tweet._id === id
+              ? { ...state.tweet, ...updatedFields }
+              : state.tweet,
+        }));
+      } else {
+        console.error("Failed to update tweet:", res.data.message);
+      }
+    } catch (error) {
+      console.error("Error updating tweet:", error);
     }
   },
 }));

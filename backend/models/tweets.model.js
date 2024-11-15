@@ -9,6 +9,10 @@ const tweetSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  parentTweetId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Tweet",
+  },
   media: [
     {
       mediaId: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -29,8 +33,9 @@ const tweetSchema = new mongoose.Schema({
         ref: "User",
         required: true,
       },
-      commentedAt: {
-        type: Date,
+      tweetId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet",
         required: true,
       },
     },
@@ -40,6 +45,11 @@ const tweetSchema = new mongoose.Schema({
       userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+        required: true,
+      },
+      tweetId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet",
         required: true,
       },
       likedAt: {

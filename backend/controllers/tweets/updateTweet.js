@@ -3,7 +3,7 @@ import { TweetModel } from "../../models/tweets.model.js";
 
 const updateTweet = async (req, res) => {
   const { id } = req.params;
-  const tweet = req.body;
+  const updatedFields = req.body;
 
   if (!mongoose.isValidObjectId(id)) {
     return res.status(404).json({
@@ -11,10 +11,14 @@ const updateTweet = async (req, res) => {
       message: "Tweet not found",
     });
   }
+  console.log("updatedFields", updatedFields);
+
   try {
-    const updatedTweet = await TweetModel.findByIdAndUpdate(id, tweet, {
-      new: true,
-    });
+    const updatedTweet = await TweetModel.findByIdAndUpdate(
+      id,
+      { $set: updatedFields },
+      { new: true, runValidators: true }
+    );
     res.status(200).json({
       success: true,
       data: updatedTweet,

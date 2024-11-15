@@ -75,30 +75,29 @@ const TweetContent = ({ tweet }: TweetProps) => {
 
       <Link to={`/index/tweet/${tweet._id}`}>
         <p className=" text-justify">{tweet.caption}</p>
-
-        <ImageDisplay mediaArray={tweet.media || []} />
-        <div className="flex  w-[200px] px-4 justify-between py-2">
-          <div
-            className="flex items-center gap-2 "
-            onClick={() => setOpenCreateTweet(!openCreateTweet)}
-          >
-            <FaRegComment />
-            <p>{tweet.comments?.length}</p>
-          </div>
-          <div
-            className={`flex items-center gap-2 ${
-              likesToggle ? "bg-secondary" : "bg-none"
-            }`}
-            onClick={handleLikesCounting}
-          >
-            <FaRegHeart />
-            <p>{tweet.likes?.length}</p>
-          </div>
-        </div>
-        <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
-          <CreateTweet />
-        </AuthModal>
+        <ImageDisplay mediaArray={tweet.media || []} />{" "}
       </Link>
+      <div className="flex  w-[200px] px-4 justify-between py-2">
+        <div
+          className="flex items-center gap-2 "
+          onClick={() => setOpenCreateTweet(!openCreateTweet)}
+        >
+          <FaRegComment />
+          <p>{tweet.comments?.length}</p>
+        </div>
+        <div
+          className={`flex items-center gap-2 ${
+            likesToggle ? "bg-secondary" : "bg-none"
+          }`}
+          onClick={handleLikesCounting}
+        >
+          <FaRegHeart />
+          <p>{tweet.likes?.length}</p>
+        </div>
+      </div>
+      <AuthModal isOpen={openCreateTweet} setIsOpen={setOpenCreateTweet}>
+        <CreateTweet parentTweetId={tweet._id} />
+      </AuthModal>
     </div>
   );
 };
