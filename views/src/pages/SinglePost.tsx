@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import TweetContent from "../components/TweetContent";
 import { useTweet } from "../api/tweets";
 import { useEffect, useState } from "react";
+import CommentsSection from "../components/CommentsSection";
 
 const SinglePost = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,7 +45,7 @@ const SinglePost = () => {
   return (
     <div className="">
       <TweetContent tweet={tweet} />
-      {/* <CommentsSection parentTweetId={id} /> */}
+      <CommentsSection parentTweetId={id} />
     </div>
   );
 };

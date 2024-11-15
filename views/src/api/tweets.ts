@@ -10,16 +10,19 @@ type CreateTweetResponse = {
 
 type TweetStore = {
   tweets: Tweet[];
+  comments: Tweet[];
   tweet: Tweet;
   setTweet: (tweet: Tweet) => void;
   createTweet: (newTweet: Tweet) => Promise<CreateTweetResponse | null>;
   fetchTweets: () => Promise<void>;
   fetchTweet: (id: string) => Promise<void>;
   updateTweet: (id: string, updatedFields: Partial<Tweet>) => Promise<void>;
+  fetchCommentTweets: (id: string) => Promise<void>;
 };
 
 export const useTweet = create<TweetStore>((set, get) => ({
   tweets: [],
+  comments: [],
   tweet: defaultEmptyTweet,
 
   setTweet: (tweet: Tweet) =>
@@ -27,19 +30,13 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   createTweet: async (newTweet) => {
     try {
-      const res = await axios.post("/api/tweets", newTweet, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("res", res);
-
+      const res = await axios.post("/api/tweets", newTweet);
       const { success } = res.data;
       if (success) {
         return await res.data;
       } else {
-        return await res.data;
+        console.error("Failed to create tweet:", res.data.message);
+        return { success: false, message: res.data.message };
       }
     } catch (error) {
       console.error("Error creating tweet:", error);
@@ -104,6 +101,20 @@ export const useTweet = create<TweetStore>((set, get) => ({
       }
     } catch (error) {
       console.error("Error updating tweet:", error);
+    }
+  },
+
+  fetchCommentTweets: async (id: string) => {
+    try {
+      const res = await axios.get(`/api/tweets/comments/${id}`);
+      const { success, data } = res.data;
+      if (success) {
+        set({ comments: data });
+      } else {
+        console.error("Failed to fetch comments:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching comments ", error);
     }
   },
 }));
