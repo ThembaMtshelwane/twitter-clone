@@ -1,28 +1,20 @@
 import { create } from "zustand";
 import { Tweet } from "../definitions";
 import axios from "axios";
+import { defaultEmptyTweet } from "../utils";
 
 type CreateTweetResponse = {
   success: boolean;
   message?: string;
 };
 
-const defaultEmptyTweet = {
-  _id: "",
-  caption: "",
-  userId: "",
-  media: [],
-  likes: [],
-  comments: [],
-  createdAt: "",
-  updatedAt: "",
-};
 type TweetStore = {
   tweets: Tweet[];
   tweet: Tweet;
   setTweet: (tweet: Tweet) => void;
   createTweet: (newTweet: Tweet) => Promise<CreateTweetResponse | null>;
   fetchTweets: () => Promise<void>;
+  fetchTweet: (id: string) => Promise<void>;
 };
 
 export const useTweet = create<TweetStore>((set, get) => ({
@@ -70,15 +62,21 @@ export const useTweet = create<TweetStore>((set, get) => ({
     try {
       const { tweets } = get();
       const tweetExists = tweets.find((tweet) => tweet._id === id);
+      if (tweetExists) {
+        set({ tweet: tweetExists });
+        return;
+      }
 
-      if (!tweetExists) {
-        const res = await axios.get(`/api/users/${id}`);
-        const data = res.data;
-        set({ tweets: [...tweets, data.data] });
+      const res = await axios.get(`/api/tweets/${id}`);
+      const data = res.data;
+
+      if (data.success) {
+        set((state) => ({
+          tweets: [...state.tweets, data.data],
+          tweet: data.data,
+        }));
       } else {
-        const res = await axios.get(`/api/tweets/${id}`);
-        const data = res.data;
-        set({ tweet: data.data }); // Update single tweet state
+        console.error("Failed to fetch tweet from backend:", data.message);
       }
     } catch (error) {
       console.error("Error fetching user:", error);

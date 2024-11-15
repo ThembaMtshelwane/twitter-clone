@@ -108,7 +108,7 @@ export default TweetContent;
 const ImageDisplay = ({ mediaArray }: { mediaArray: Media[] }) => {
   return (
     <div className="my-4">
-      {mediaArray.length === 0 && <>''</>}
+      {mediaArray.length === 0 && <></>}
       {mediaArray.length === 1 && (
         <img
           className="rounded-xl object-cover object-center w-full max-w-[450px] mx-auto"

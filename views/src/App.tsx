@@ -23,7 +23,6 @@ export default function App() {
         {
           path: "tweet/:id",
           element: <SinglePost />,
-          // element: <>SINGLE </>,
         },
         {
           path: "profile/:id",
