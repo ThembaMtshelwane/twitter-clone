@@ -8,7 +8,11 @@ type AuthModalProps = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const AuthModal = ({ isOpen, setIsOpen, children }: AuthModalProps) => {
+const AuthModal: React.FC<AuthModalProps> = ({
+  isOpen,
+  setIsOpen,
+  children,
+}) => {
   return (
     <>
       {isOpen && (

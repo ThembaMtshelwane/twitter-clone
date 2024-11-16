@@ -3,7 +3,7 @@ import { useUser } from "../../api/users";
 import { User } from "../../definitions";
 import { useNavigate } from "react-router-dom";
 
-const CreateAccountForm = () => {
+const CreateAccountForm: React.FC = () => {
   const { createUser } = useUser();
   const navigate = useNavigate();
 

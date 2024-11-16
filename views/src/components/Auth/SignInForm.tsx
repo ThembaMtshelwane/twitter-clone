@@ -1,6 +1,6 @@
 import GoogleAuthButton from "./AuthButtons/GoogleAuthButton";
 
-const SignInForm = () => {
+const SignInForm: React.FC = () => {
   return (
     <section className="flex flex-col sm:w-[80%] mx-auto">
       <h1 className="text-4xl mb-5 font-semibold">Sign in to X</h1>

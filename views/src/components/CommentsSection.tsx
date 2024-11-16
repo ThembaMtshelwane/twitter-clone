@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { useTweet } from "../api/tweets";
 import Tweet from "./TweetContent";
 
-const CommentsSection = ({ parentTweetId = "" }: { parentTweetId: string }) => {
+const CommentsSection: React.FC<{ parentTweetId: string }> = ({
+  parentTweetId = "",
+}) => {
   const { comments, fetchCommentTweets } = useTweet();
   useEffect(() => {
     fetchCommentTweets(parentTweetId);

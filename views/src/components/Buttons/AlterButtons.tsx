@@ -4,7 +4,7 @@ import AuthModal from "../Auth/AuthModal";
 import EditTweet from "../EditTweet";
 import { Tweet } from "../../definitions";
 
-export const AlterButtons = ({ id }: { id: string }) => {
+export const AlterButtons: React.FC<{ id: string }> = ({ id }) => {
   return (
     <div className="flex  w-full col-span-4 px-3 space-x-4">
       <EditTweetButton id={id} />

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const FollowButtons = () => {
+export const FollowButtons: React.FC = () => {
   const [followToggle, seFollowToggle] = useState(false);
   return (
     <button

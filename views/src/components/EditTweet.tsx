@@ -5,7 +5,7 @@ import { useTweet } from "../api/tweets";
 import { compressImage } from "../utils";
 import ObjectID from "bson-objectid";
 
-const EditTweet = ({ id, tweet }: { id: string; tweet: Tweet }) => {
+const EditTweet: React.FC<{ id: string; tweet: Tweet }> = ({ id, tweet }) => {
   const [images, setImages] = useState<Media[]>(tweet.media || []);
   const [caption, setCaption] = useState<string>(tweet.caption || "");
   const { updateTweet } = useTweet();

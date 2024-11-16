@@ -4,10 +4,10 @@ type JoinOptionsProps = {
   openCreateAccount: boolean;
   setOpenCreateAccount: (openCreateAccount: boolean) => void;
 };
-const JoinOptions = ({
+const JoinOptions: React.FC<JoinOptionsProps> = ({
   openCreateAccount,
   setOpenCreateAccount,
-}: JoinOptionsProps) => {
+}) => {
   return (
     <div className="my-10  row-span-2 max-w-[320px] mx-auto lg:mx-0">
       <h3 className="font-semibold text-3xl my-5 mx-auto sm:text-4xl">

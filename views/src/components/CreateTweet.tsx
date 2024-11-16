@@ -5,7 +5,9 @@ import { Tweet, Comment, MAX_IMAGES, MAX_CAPTION_LENGTH } from "../definitions";
 import { compressImage } from "../utils";
 import { CaptionTextarea, FileInput, ImagePreviews } from "./TweetElements";
 
-const CreateTweet = ({ parentTweetId = "" }: { parentTweetId?: string }) => {
+const CreateTweet: React.FC<{
+  parentTweetId?: string;
+}> = ({ parentTweetId = "" }) => {
   const [images, setImages] = useState<string[]>([]);
   const [caption, setCaption] = useState("");
   const { createTweet, updateTweet } = useTweet();
