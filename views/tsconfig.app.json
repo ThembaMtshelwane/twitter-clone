@@ -24,7 +24,10 @@
     "noUncheckedSideEffectImports": true,
 
     "outDir": "./dist",
-    "esModuleInterop": true
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
