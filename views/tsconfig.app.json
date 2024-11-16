@@ -24,8 +24,7 @@
     "noUncheckedSideEffectImports": true,
 
     "outDir": "./dist",
-    "esModuleInterop": true,
-    "types": ["vite/client"]
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
