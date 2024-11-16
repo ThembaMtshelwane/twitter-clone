@@ -7,7 +7,7 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const Navbar = ({ isOpen, setIsOpen }: Props) => {
+const Navbar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   return (
     <nav className="border-b px-6 py-4 flex justify-between md:hidden">
       <Link to="/index">

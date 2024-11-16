@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-const MainLayout = () => {
+const MainLayout: React.FC = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
     <section className="min-h-screen">

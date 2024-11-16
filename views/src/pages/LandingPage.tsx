@@ -5,7 +5,7 @@ import AuthModal from "../components/Auth/AuthModal";
 import CreateAccountForm from "../components/Auth/CreateAccountForm";
 import SignInForm from "../components/Auth/SignInForm";
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
   const [openSignIn, setOpenSignIn] = useState<boolean>(false);
   const [openCreateAccount, setOpenCreateAccount] = useState<boolean>(false);
   return (

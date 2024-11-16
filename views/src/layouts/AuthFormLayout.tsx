@@ -1,4 +1,4 @@
-const AuthFormLayout = () => {
+const AuthFormLayout: React.FC = () => {
   return <div>AuthFormLayout</div>;
 };
 

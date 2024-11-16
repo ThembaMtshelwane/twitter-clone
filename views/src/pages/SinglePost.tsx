@@ -4,7 +4,7 @@ import { useTweet } from "../api/tweets";
 import { useEffect, useState } from "react";
 import CommentsSection from "../components/CommentsSection";
 
-const SinglePost = () => {
+const SinglePost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { tweet, fetchTweet } = useTweet();
   const [loading, setLoading] = useState(true);

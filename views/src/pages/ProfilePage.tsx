@@ -7,8 +7,7 @@ import { useParams } from "react-router-dom";
 import { useTweet } from "../api/tweets";
 import { useUser } from "../api/users";
 
-
-const ProfilePage = () => {
+const ProfilePage: React.FC = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { users } = useUser();

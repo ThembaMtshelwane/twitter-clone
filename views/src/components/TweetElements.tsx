@@ -1,13 +1,10 @@
 import { IoIosAddCircleOutline, IoMdCloseCircle } from "react-icons/io";
 import { MAX_IMAGES } from "../definitions";
 
-export const FileInput = ({
-  onChange,
-  disabled,
-}: {
+export const FileInput: React.FC<{
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
-}) => (
+}> = ({ onChange, disabled }) => (
   <div className="relative">
     <input
       type="file"
@@ -38,13 +35,10 @@ export const FileInput = ({
   </div>
 );
 
-export const ImagePreviews = ({
-  images,
-  onRemove,
-}: {
+export const ImagePreviews: React.FC<{
   images: { preview: string }[];
   onRemove: (index: number) => void;
-}) => {
+}> = ({ images, onRemove }) => {
   return (
     <div className="grid grid-cols-2 gap-2">
       {images.map((img, index) => (
@@ -67,15 +61,11 @@ export const ImagePreviews = ({
   );
 };
 
-export const CaptionTextarea = ({
-  value,
-  onChange,
-  maxLength,
-}: {
+export const CaptionTextarea: React.FC<{
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   maxLength: number;
-}) => (
+}> = ({ value, onChange, maxLength }) => (
   <div className="relative">
     <textarea
       name="caption"

@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
 };
 
-const UserPreview = ({ tweet, children }: Props) => {
+const UserPreview: React.FC<Props> = ({ tweet, children }) => {
   const { users, fetchUser } = useUser();
 
   const user = users.find((u) => u._id === tweet.userId);

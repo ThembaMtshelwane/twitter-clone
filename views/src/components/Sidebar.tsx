@@ -12,7 +12,7 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const Sidebar = ({ isOpen, setIsOpen }: Props) => {
+const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const currentDummyUserId = "67346a6ed8813e388dc12182";
   return (

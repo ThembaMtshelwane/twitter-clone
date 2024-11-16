@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Tweet from "../components/TweetContent";
 import { useTweet } from "../api/tweets";
 
-const MainPage = () => {
+const MainPage: React.FC = () => {
   const { fetchTweets, tweets } = useTweet();
   useEffect(() => {
     fetchTweets();

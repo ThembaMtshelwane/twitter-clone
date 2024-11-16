@@ -14,7 +14,7 @@ type TweetProps = {
   tweet: Tweet;
 };
 
-const TweetContent = ({ tweet }: TweetProps) => {
+const TweetContent: React.FC<TweetProps> = ({ tweet }) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
   const [likesCount, setLikesCount] = useState(352);
   const [likesToggle, setLikesToggle] = useState(false);

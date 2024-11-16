@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react";
 import { IoIosAddCircleOutline, IoMdCloseCircle } from "react-icons/io";
 
-const EditUserForm = ({ setOpen }: { setOpen: (isOpen: boolean) => void }) => {
+const EditUserForm: React.FC<{ setOpen: (isOpen: boolean) => void }> = ({
+  setOpen,
+}) => {
   const [avatar, setAvatar] = useState("");
   const [banner, setBanner] = useState("");
   const [username, setUsername] = useState("");
