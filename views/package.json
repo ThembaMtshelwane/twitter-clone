@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "bson-objectid": "^2.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "twitter-clone": "file:..",
     "zustand": "^5.0.1"
   },
   "devDependencies": {
